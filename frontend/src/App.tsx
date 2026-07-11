@@ -9,6 +9,8 @@ import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import Navigation from "./components/Navigation";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import Dashboard from "./pages/Dashboard";
 import Audits from "./pages/Audits";
 import Norms from "./pages/Norms";
@@ -47,7 +49,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
   }
 
   return isAuthenticated ? (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-[#F7F5EF] flex">
       <Navigation />
       <main className="flex-1 overflow-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10">
@@ -95,6 +97,22 @@ function App() {
             element={
               <PublicRoute>
                 <Register />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <PublicRoute>
+                <ForgotPassword />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/reset-password/:token"
+            element={
+              <PublicRoute>
+                <ResetPassword />
               </PublicRoute>
             }
           />

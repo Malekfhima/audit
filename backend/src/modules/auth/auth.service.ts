@@ -1,12 +1,15 @@
+import crypto from 'crypto';
 import { authRepository } from './auth.repository';
 import { userRepository } from '../users/user.repository';
 import { hashPassword, comparePassword } from '../../core/auth/passwordUtils';
 import { generateAccessToken, generateRefreshToken, getRefreshTokenExpiry } from '../../core/auth/tokenUtils';
-import { UnauthorizedError, ConflictError } from '../../core/http/httpError';
+import { UnauthorizedError, ConflictError, BadRequestError } from '../../core/http/httpError';
 import {
   LoginDto,
   RegisterDto,
   ChangePasswordDto,
+  ForgotPasswordDto,
+  ResetPasswordDto,
 } from './auth.types';
 
 class AuthService {
@@ -90,6 +93,44 @@ class AuthService {
     await userRepository.update(userId, { password: hashed });
 
     await authRepository.revokeAllUserTokens(userId);
+  }
+
+  async forgotPassword(dto: ForgotPasswordDto) {
+    const user = await userRepository.findByEmail(dto.email);
+    // Always return success to prevent email enumeration
+    if (!user) return { message: 'If the email exists, a reset link has been sent.' };
+
+    // Generate a random token
+    const rawToken = crypto.randomBytes(32).toString('hex');
+    // Hash the token for storage (so DB compromise doesn't reveal tokens)
+    const hashedToken = crypto.createHash('sha256').update(rawToken).digest('hex');
+
+    const expires = new Date();
+    expires.setHours(expires.getHours() + 1); // 1 hour expiry
+
+    await userRepository.setPasswordResetToken(user.id, hashedToken, expires);
+
+    // In production, send email with reset link:
+    // `${frontendUrl}/reset-password/${rawToken}`
+    // For now, return the raw token so the frontend can use it
+    return {
+      message: 'If the email exists, a reset link has been sent.',
+      resetToken: rawToken,
+    };
+  }
+
+  async resetPassword(dto: ResetPasswordDto) {
+    const hashedToken = crypto.createHash('sha256').update(dto.token).digest('hex');
+
+    const user = await userRepository.findByResetToken(hashedToken);
+    if (!user) throw new BadRequestError('Invalid or expired reset token');
+
+    const hashed = await hashPassword(dto.newPassword);
+    await userRepository.update(user.id, { password: hashed });
+    await userRepository.clearPasswordResetToken(user.id);
+    await authRepository.revokeAllUserTokens(user.id);
+
+    return { message: 'Password has been reset successfully.' };
   }
 }
 

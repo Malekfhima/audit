@@ -6,11 +6,11 @@ import {
 
 // ==================== COLORS ====================
 const COLORS = {
-  primary: '#6366f1', success: '#10b981', warning: '#f59e0b',
-  danger: '#ef4444', info: '#3b82f6', purple: '#8b5cf6',
+  primary: '#24314C', success: '#10b981', warning: '#f59e0b',
+  danger: '#ef4444', info: '#3b82f6', purple: '#B8873D',
 };
 
-const CHART_COLORS = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#3b82f6', '#8b5cf6', '#ec4899', '#06b6d4'];
+const CHART_COLORS = ['#24314C', '#10b981', '#f59e0b', '#ef4444', '#3b82f6', '#B8873D', '#ec4899', '#06b6d4'];
 
 // ==================== EMPTY STATE ====================
 const EmptyChart: React.FC<{ text: string }> = ({ text }) => (

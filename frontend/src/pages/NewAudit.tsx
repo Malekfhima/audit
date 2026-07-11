@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../lib/api';
-import { ArrowLeft, Save, FileText, Building2, Users, Calendar } from 'lucide-react';
+import { ArrowLeft, Save } from 'lucide-react';
 
 const NewAudit: React.FC = () => {
   const navigate = useNavigate();

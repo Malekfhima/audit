@@ -1,0 +1,54 @@
+
+  [32m[1mVITE[22m v8.0.9[39m  [2mready in [0m[1m225[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5173[22m/[39m
+  [32m➜[39m  [1mNetwork[22m: [36mhttp://192.168.1.17:[1m5173[22m/[39m
+[2m10:28:16 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/Login.tsx[22m
+[2m10:30:17 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/Register.tsx[22m
+[2m10:30:18 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/Register.tsx[22m
+[2m10:36:55 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/AuditDetail.tsx[22m
+[2m10:40:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/AuditDetail.tsx[22m
+[2m10:40:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/Audits.tsx[22m
+[2m10:40:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/CorrectiveActions.tsx[22m
+[2m10:40:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/Dashboard.tsx[22m
+[2m10:40:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/Legal.tsx[22m
+[2m10:40:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/Login.tsx[22m
+[2m10:40:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/NewAudit.tsx[22m
+[2m10:40:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/NewCorrectiveAction.tsx[22m
+[2m10:40:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/NewLegalRequirement.tsx[22m
+[2m10:40:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/NewNonConformity.tsx[22m
+[2m10:40:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/NewReport.tsx[22m
+[2m10:40:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/NewRisk.tsx[22m
+[2m10:40:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/NonConformities.tsx[22m
+[2m10:40:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/Norms.tsx[22m
+[2m10:40:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/Notifications.tsx[22m
+[2m10:40:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/Processes.tsx[22m
+[2m10:40:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/Register.tsx[22m
+[2m10:40:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/Reports.tsx[22m
+[2m10:40:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/Risks.tsx[22m
+[2m10:40:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/Roles.tsx[22m
+[2m10:40:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/Sites.tsx[22m
+[2m10:40:24 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/Users.tsx[22m
+node:internal/fs/watchers:321
+    const error = new UVException({
+                  ^
+
+Error: EBUSY: resource busy or locked, watch 'D:\bootcamp\Gestion_Audit\frontend\src\pages\AuditDetail.tsx'
+    at FSWatcher.<computed> (node:internal/fs/watchers:321:19)
+    at Object.watch (node:fs:2532:36)
+    at createFsWatchInstance (file:///D:/bootcamp/Gestion_Audit/frontend/node_modules/vite/dist/node/chunks/node.js:8502:16)
+    at setFsWatchListener (file:///D:/bootcamp/Gestion_Audit/frontend/node_modules/vite/dist/node/chunks/node.js:8544:14)
+    at NodeFsHandler._watchWithNodeFs (file:///D:/bootcamp/Gestion_Audit/frontend/node_modules/vite/dist/node/chunks/node.js:8658:20)
+    at NodeFsHandler._handleFile (file:///D:/bootcamp/Gestion_Audit/frontend/node_modules/vite/dist/node/chunks/node.js:8702:24)
+    at NodeFsHandler._addToNodeFs (file:///D:/bootcamp/Gestion_Audit/frontend/node_modules/vite/dist/node/chunks/node.js:8876:26)
+Emitted 'error' event on FSWatcher instance at:
+    at FSWatcher._handleError (file:///D:/bootcamp/Gestion_Audit/frontend/node_modules/vite/dist/node/chunks/node.js:9675:146)
+    at NodeFsHandler._addToNodeFs (file:///D:/bootcamp/Gestion_Audit/frontend/node_modules/vite/dist/node/chunks/node.js:8881:18) {
+  errno: -4082,
+  syscall: 'watch',
+  code: 'EBUSY',
+  path: 'D:\\bootcamp\\Gestion_Audit\\frontend\\src\\pages\\AuditDetail.tsx',
+  filename: 'D:\\bootcamp\\Gestion_Audit\\frontend\\src\\pages\\AuditDetail.tsx'
+}
+
+Node.js v26.3.1

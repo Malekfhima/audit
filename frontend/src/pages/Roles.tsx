@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../lib/api';
-import { Plus, Shield, Users, Lock } from 'lucide-react';
+import { Plus, Shield } from 'lucide-react';
 
 interface Role {
   _id: string;
@@ -78,7 +78,7 @@ const Roles: React.FC = () => {
                     <span className="badge-info text-xs">System</span>
                   )}
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-1">{role.name}</h3>
+                <h3 className="font-serif text-lg font-semibold text-gray-900 mb-1">{role.name}</h3>
                 <p className="text-sm text-gray-500 mb-4">{role.description || 'No description'}</p>
                 <div className="flex flex-wrap gap-1.5">
                   {role.permissions.map((perm, idx) => (

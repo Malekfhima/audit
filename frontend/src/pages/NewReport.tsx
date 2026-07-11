@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../lib/api';
-import { ArrowLeft, FileText, Download } from 'lucide-react';
+import { ArrowLeft, Download } from 'lucide-react';
 
 const NewReport: React.FC = () => {
   const navigate = useNavigate();

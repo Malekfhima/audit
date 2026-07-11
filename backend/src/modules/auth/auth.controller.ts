@@ -35,3 +35,13 @@ export const changePassword = asyncHandler(async (req: Request, res: Response) =
 export const getCurrentUser = asyncHandler(async (req: Request, res: Response) => {
   res.json({ success: true, data: req.user });
 });
+
+export const forgotPassword = asyncHandler(async (req: Request, res: Response) => {
+  const data = await authService.forgotPassword(req.body);
+  res.json({ success: true, data });
+});
+
+export const resetPassword = asyncHandler(async (req: Request, res: Response) => {
+  const data = await authService.resetPassword(req.body);
+  res.json({ success: true, data });
+});

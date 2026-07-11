@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../lib/api';
 import { useAuth } from '../contexts/AuthContext';
-import { ArrowLeft, Save, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Save } from 'lucide-react';
 
 const NewCorrectiveAction: React.FC = () => {
   const navigate = useNavigate();

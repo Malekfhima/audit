@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../lib/api';
-import { ArrowLeft, Save, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, Save } from 'lucide-react';
 
 const NewRisk: React.FC = () => {
   const navigate = useNavigate();
@@ -96,7 +96,7 @@ const NewRisk: React.FC = () => {
             </div>
             <div className="bg-gray-50 rounded-xl p-4 text-center">
               <p className="text-sm text-gray-500 mb-1">Risk Score (P × I)</p>
-              <p className={`text-3xl font-bold ${getScoreColor(riskScore)}`}>{riskScore}</p>
+              <p className={`font-serif text-3xl font-semibold ${getScoreColor(riskScore)}`}>{riskScore}</p>
             </div>
             <div>
               <label className="label">Identified By *</label>

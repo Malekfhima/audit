@@ -166,7 +166,7 @@ const Dashboard: React.FC = () => {
                     <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${card.gradient} flex items-center justify-center shadow-lg`}>
                       <card.icon className="w-6 h-6 text-white" />
                     </div>
-                    <span className="text-3xl font-bold text-gray-900">{card.value}</span>
+                    <span className="font-serif text-3xl font-semibold text-gray-900">{card.value}</span>
                   </div>
                   <h3 className="text-sm font-medium text-gray-600 mb-3">{card.label}</h3>
                   <div className="space-y-1.5">

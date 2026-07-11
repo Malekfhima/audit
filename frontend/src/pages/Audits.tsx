@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../lib/api';
-import { Plus, Search, Filter, Eye, Play, CheckCircle, XCircle, Clock, Calendar, Building2, FileText } from 'lucide-react';
+import { Plus, Search, Filter, Eye, Play, CheckCircle, XCircle, Clock, FileText } from 'lucide-react';
 
 interface Audit {
   _id: string;

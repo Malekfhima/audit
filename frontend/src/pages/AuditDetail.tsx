@@ -52,7 +52,7 @@ const AuditDetail: React.FC = () => {
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-2xl font-bold text-gray-900">{audit.title}</h1>
+                <h1 className="font-serif text-2xl font-semibold text-gray-900">{audit.title}</h1>
                 {getStatusBadge(audit.status)}
               </div>
               <p className="text-sm text-gray-500">

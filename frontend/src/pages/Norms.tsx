@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../lib/api';
-import { Plus, Search, Scale, BookOpen } from 'lucide-react';
+import { Plus, Search, Scale } from 'lucide-react';
 
 interface Norm {
   _id: string;

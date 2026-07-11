@@ -112,7 +112,7 @@ const Risks: React.FC = () => {
                 <div className={`w-8 h-8 ${stat.color} rounded-lg flex items-center justify-center mx-auto mb-2`}>
                   <TrendingUp className="w-4 h-4 text-white" />
                 </div>
-                <p className="text-2xl font-bold text-gray-900">{stat.count}</p>
+                <p className="font-serif text-2xl font-semibold text-gray-900">{stat.count}</p>
                 <p className="text-xs text-gray-500">{stat.label}</p>
               </div>
             ))}

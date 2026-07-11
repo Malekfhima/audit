@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../lib/api';
-import { Plus, Search, Users as UsersIcon, Shield, Mail, User } from 'lucide-react';
+import { Plus, Search, Users as UsersIcon, Mail } from 'lucide-react';
 
 interface AppUser {
   _id: string;

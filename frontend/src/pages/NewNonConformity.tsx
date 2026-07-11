@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../lib/api';
-import { ArrowLeft, Save, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, Save } from 'lucide-react';
 
 const NewNonConformity: React.FC = () => {
   const navigate = useNavigate();

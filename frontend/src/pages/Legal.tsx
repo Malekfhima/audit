@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../lib/api';
-import { Plus, Search, Scale, BookOpen, Globe, Calendar } from 'lucide-react';
+import { Plus, Search, Scale, Globe } from 'lucide-react';
 
 interface LegalReq {
   _id: string;
