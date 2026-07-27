@@ -5,7 +5,7 @@ import api from '../lib/api';
 
 const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState('');
-  const [step, setStep] = useState<'email' | 'sent' | 'done'>('email');
+  const [step, setStep] = useState<'email' | 'sent'>('email');
   const [resetToken, setResetToken] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -15,17 +15,17 @@ const ForgotPassword: React.FC = () => {
     setError('');
 
     if (!email.trim()) {
-      setError('Please enter your email address');
+      setError('Veuillez saisir votre adresse email');
       return;
     }
 
     setLoading(true);
     try {
       const response = await api.post('/auth/forgot-password', { email });
-      setResetToken(response.data.data.resetToken || '');
+      setResetToken(response.data.data?.resetToken || '');
       setStep('sent');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Something went wrong. Please try again.');
+      setError(err.response?.data?.message || 'Une erreur est survenue. Veuillez réessayer.');
     } finally {
       setLoading(false);
     }
@@ -56,17 +56,17 @@ const ForgotPassword: React.FC = () => {
 
         <div className="relative z-10 flex flex-col gap-10">
           <h1 className="max-w-sm font-serif text-[2.65rem] leading-[1.15] text-[#F2EFE6]">
-            Reset your
+            Réinitialisez
             <br />
-            credentials
+            vos identifiants
           </h1>
           <p className="max-w-[16rem] font-sans text-[13.5px] leading-relaxed text-[#8B93A7]">
-            Enter the email address linked to your account and we&rsquo;ll send a reset link.
+            Saisissez l&rsquo;adresse email liée à votre compte et nous vous enverrons un lien de réinitialisation.
           </p>
         </div>
 
         <div className="relative z-10 flex items-center gap-3 border-t border-white/10 pt-6 font-mono text-[11px] tracking-wide text-[#5A6273]">
-          <span>SESSION&nbsp;SECURED</span>
+          <span>SESSION&nbsp;SÉCURISÉE</span>
           <span className="h-1 w-1 rounded-full bg-[#5A6273]" />
           <span>&copy; {new Date().getFullYear()} Audit Pro</span>
         </div>
@@ -84,9 +84,9 @@ const ForgotPassword: React.FC = () => {
 
           {step === 'email' && (
             <>
-              <h2 className="font-serif text-[1.9rem] leading-tight text-[#1B2130]">Forgot password?</h2>
+              <h2 className="font-serif text-[1.9rem] leading-tight text-[#1B2130]">Mot de passe oublié ?</h2>
               <p className="mt-2 text-[14.5px] text-[#6B7280]">
-                No worries, we&rsquo;ll send you reset instructions.
+                Pas d&rsquo;inquiétude, nous vous enverrons les instructions.
               </p>
 
               {error && (
@@ -102,7 +102,7 @@ const ForgotPassword: React.FC = () => {
                     htmlFor="email"
                     className="mb-1.5 block font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-[#6B7280]"
                   >
-                    Email address
+                    Adresse email
                   </label>
                   <div className="relative">
                     <Mail className="pointer-events-none absolute left-3.5 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-[#9CA3AF]" />
@@ -111,7 +111,7 @@ const ForgotPassword: React.FC = () => {
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="you@company.com"
+                      placeholder="vous@entreprise.com"
                       autoComplete="email"
                       autoFocus
                       className="w-full rounded-lg border border-[#E3DFD2] bg-white py-3 pl-11 pr-4 text-[14.5px] text-[#1B2130] placeholder:text-[#B0B4BE] transition-colors focus:border-[#B8873D] focus:outline-none focus:ring-2 focus:ring-[#B8873D]/25"
@@ -127,12 +127,12 @@ const ForgotPassword: React.FC = () => {
                   {loading ? (
                     <>
                       <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                      Sending&hellip;
+                      Envoi&hellip;
                     </>
                   ) : (
                     <>
                       <Send className="h-[18px] w-[18px]" />
-                      Send reset instructions
+                      Envoyer les instructions
                     </>
                   )}
                 </button>
@@ -144,7 +144,7 @@ const ForgotPassword: React.FC = () => {
                   className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-[#B8873D] transition-colors hover:text-[#96692A]"
                 >
                   <ArrowLeft className="h-4 w-4" />
-                  Back to sign in
+                  Retour à la connexion
                 </Link>
               </div>
             </>
@@ -155,27 +155,28 @@ const ForgotPassword: React.FC = () => {
               <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50">
                 <Send className="h-7 w-7 text-emerald-600" />
               </div>
-              <h2 className="font-serif text-[1.9rem] leading-tight text-[#1B2130]">Check your email</h2>
+              <h2 className="font-serif text-[1.9rem] leading-tight text-[#1B2130]">Vérifiez votre email</h2>
               <p className="mt-3 text-[14.5px] text-[#6B7280]">
-                We&rsquo;ve sent a password reset link to <strong className="text-[#1B2130]">{email}</strong>
+                Nous avons envoyé un lien de réinitialisation à <strong className="text-[#1B2130]">{email}</strong>
+              </p>
+              <p className="mt-1 text-[13px] text-[#9CA3AF]">
+                Vérifiez votre boîte de réception et cliquez sur le lien pour réinitialiser votre mot de passe. Il expire dans 1 heure.
               </p>
 
               {resetToken && (
-                <div className="mt-6 rounded-lg border border-[#E3DFD2] bg-white p-4 text-left">
-                  <p className="text-[11px] font-mono uppercase tracking-[0.1em] text-[#6B7280] mb-2">
-                    Dev mode — reset token
+                <div className="mt-6 rounded-lg border border-amber-200 bg-amber-50 p-4 text-left">
+                  <p className="text-[11px] font-mono uppercase tracking-[0.1em] text-[#9A7B3A] mb-2">
+                    Mode développement — lien ci-dessous
                   </p>
-                  <p className="break-all text-[13px] text-[#1B2130] font-mono bg-[#F7F5EF] rounded p-2">
-                    {resetToken}
+                  <p className="text-[13px] text-[#1B2130]">
+                    Aucun service email configuré. Utilisez ce lien pour réinitialiser votre mot de passe :
                   </p>
-                  <p className="mt-2 text-[12px] text-[#6B7280]">
-                    <Link
-                      to={`/reset-password/${resetToken}`}
-                      className="font-semibold text-[#B8873D] hover:text-[#96692A]"
-                    >
-                      Click here to reset your password &rarr;
-                    </Link>
-                  </p>
+                  <Link
+                    to={`/reset-password/${resetToken}`}
+                    className="mt-2 block text-[13px] font-mono text-[#B8873D] break-all hover:text-[#96692A] underline underline-offset-2"
+                  >
+                    /reset-password/{resetToken.substring(0, 16)}&hellip;
+                  </Link>
                 </div>
               )}
 
@@ -185,7 +186,7 @@ const ForgotPassword: React.FC = () => {
                   className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-[#B8873D] transition-colors hover:text-[#96692A]"
                 >
                   <ArrowLeft className="h-4 w-4" />
-                  Back to sign in
+                  Retour à la connexion
                 </Link>
               </div>
             </div>

@@ -18,17 +18,17 @@ const ResetPassword: React.FC = () => {
     setError('');
 
     if (!token) {
-      setError('Invalid reset link. Please request a new one.');
+      setError('Lien de réinitialisation invalide. Veuillez en demander un nouveau.');
       return;
     }
 
     if (password.length < 8) {
-      setError('Password must be at least 8 characters');
+      setError('Le mot de passe doit contenir au moins 8 caractères');
       return;
     }
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError('Les mots de passe ne correspondent pas');
       return;
     }
 
@@ -43,7 +43,7 @@ const ResetPassword: React.FC = () => {
         setTimeout(() => navigate('/login'), 3000);
       }
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Invalid or expired reset token. Please try again.');
+      setError(err.response?.data?.message || 'Jeton de réinitialisation invalide ou expiré. Veuillez réessayer.');
     } finally {
       setLoading(false);
     }
@@ -56,16 +56,16 @@ const ResetPassword: React.FC = () => {
           <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50">
             <CheckCircle className="h-7 w-7 text-emerald-600" />
           </div>
-          <h2 className="font-serif text-[1.9rem] leading-tight text-[#1B2130]">Password reset</h2>
+          <h2 className="font-serif text-[1.9rem] leading-tight text-[#1B2130]">Mot de passe réinitialisé</h2>
           <p className="mt-3 text-[14.5px] text-[#6B7280]">
-            Your password has been reset successfully. Redirecting to sign in&hellip;
+            Votre mot de passe a été réinitialisé avec succès. Redirection vers la connexion&hellip;
           </p>
           <Link
             to="/login"
             className="mt-6 inline-flex items-center gap-1.5 text-[13.5px] font-medium text-[#B8873D] transition-colors hover:text-[#96692A]"
           >
             <ArrowLeft className="h-4 w-4" />
-            Back to sign in
+            Retour à la connexion
           </Link>
         </div>
       </div>
@@ -97,17 +97,17 @@ const ResetPassword: React.FC = () => {
 
         <div className="relative z-10 flex flex-col gap-10">
           <h1 className="max-w-sm font-serif text-[2.65rem] leading-[1.15] text-[#F2EFE6]">
-            Choose a new
+            Choisissez un nouveau
             <br />
-            password
+            mot de passe
           </h1>
           <p className="max-w-[16rem] font-sans text-[13.5px] leading-relaxed text-[#8B93A7]">
-            Make it at least 8 characters and something you haven&rsquo;t used before.
+            Choisissez au moins 8 caractères et un mot de passe que vous n&rsquo;avez jamais utilisé.
           </p>
         </div>
 
         <div className="relative z-10 flex items-center gap-3 border-t border-white/10 pt-6 font-mono text-[11px] tracking-wide text-[#5A6273]">
-          <span>SESSION&nbsp;SECURED</span>
+          <span>SESSION&nbsp;SÉCURISÉE</span>
           <span className="h-1 w-1 rounded-full bg-[#5A6273]" />
           <span>&copy; {new Date().getFullYear()} Audit Pro</span>
         </div>
@@ -123,9 +123,9 @@ const ResetPassword: React.FC = () => {
             <span className="font-mono text-[13px] tracking-[0.2em] text-[#0B1220]">AUDIT&nbsp;PRO</span>
           </div>
 
-          <h2 className="font-serif text-[1.9rem] leading-tight text-[#1B2130]">Reset password</h2>
+          <h2 className="font-serif text-[1.9rem] leading-tight text-[#1B2130]">Réinitialiser le mot de passe</h2>
           <p className="mt-2 text-[14.5px] text-[#6B7280]">
-            Enter your new password below.
+            Saisissez votre nouveau mot de passe ci-dessous.
           </p>
 
           {error && (
@@ -141,7 +141,7 @@ const ResetPassword: React.FC = () => {
                 htmlFor="password"
                 className="mb-1.5 block font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-[#6B7280]"
               >
-                New password
+                Nouveau mot de passe
               </label>
               <div className="relative">
                 <Lock className="pointer-events-none absolute left-3.5 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-[#9CA3AF]" />
@@ -150,7 +150,7 @@ const ResetPassword: React.FC = () => {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Min. 8 characters"
+                  placeholder="Min. 8 caractères"
                   autoComplete="new-password"
                   autoFocus
                   className="w-full rounded-lg border border-[#E3DFD2] bg-white py-3 pl-11 pr-11 text-[14.5px] text-[#1B2130] placeholder:text-[#B0B4BE] transition-colors focus:border-[#B8873D] focus:outline-none focus:ring-2 focus:ring-[#B8873D]/25"
@@ -171,7 +171,7 @@ const ResetPassword: React.FC = () => {
                 htmlFor="confirmPassword"
                 className="mb-1.5 block font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-[#6B7280]"
               >
-                Confirm password
+                Confirmer le mot de passe
               </label>
               <div className="relative">
                 <Lock className="pointer-events-none absolute left-3.5 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-[#9CA3AF]" />
@@ -180,7 +180,7 @@ const ResetPassword: React.FC = () => {
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="Repeat password"
+                  placeholder="Répétez le mot de passe"
                   autoComplete="new-password"
                   className="w-full rounded-lg border border-[#E3DFD2] bg-white py-3 pl-11 pr-4 text-[14.5px] text-[#1B2130] placeholder:text-[#B0B4BE] transition-colors focus:border-[#B8873D] focus:outline-none focus:ring-2 focus:ring-[#B8873D]/25"
                 />
@@ -195,12 +195,12 @@ const ResetPassword: React.FC = () => {
               {loading ? (
                 <>
                   <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                  Resetting&hellip;
+                  Réinitialisation&hellip;
                 </>
               ) : (
                 <>
                   <CheckCircle className="h-[18px] w-[18px]" />
-                  Reset password
+                  Réinitialiser le mot de passe
                 </>
               )}
             </button>
@@ -212,7 +212,7 @@ const ResetPassword: React.FC = () => {
               className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-[#B8873D] transition-colors hover:text-[#96692A]"
             >
               <ArrowLeft className="h-4 w-4" />
-              Back to sign in
+              Retour à la connexion
             </Link>
           </div>
         </div>

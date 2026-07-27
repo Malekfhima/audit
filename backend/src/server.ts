@@ -14,6 +14,10 @@ const startServer = async () => {
 
     await connectDatabase();
 
+    // Verify email connection (non-blocking — logs warning if unavailable)
+    const { emailService } = await import('./core/email/emailService');
+    emailService.verifyConnection();
+
     server = app.listen(config.server.port, () => {
       logger.info(
         `✅ Server listening on port ${config.server.port}`

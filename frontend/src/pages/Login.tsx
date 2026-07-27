@@ -17,11 +17,11 @@ const Login: React.FC = () => {
     setError('');
 
     if (!email.trim()) {
-      setError('Please enter your email address');
+      setError('Veuillez saisir votre adresse email');
       return;
     }
     if (!password) {
-      setError('Please enter your password');
+      setError('Veuillez saisir votre mot de passe');
       return;
     }
 
@@ -30,7 +30,7 @@ const Login: React.FC = () => {
       await login(email, password);
       navigate('/dashboard');
     } catch (err: any) {
-      const message = err.response?.data?.message || 'Invalid credentials. Please try again.';
+      const message = err.response?.data?.message || 'Identifiants invalides. Veuillez réessayer.';
       setError(message);
     } finally {
       setLoading(false);
@@ -65,9 +65,9 @@ const Login: React.FC = () => {
         {/* Headline + seal */}
         <div className="relative z-10 flex flex-col gap-10">
           <h1 className="max-w-sm font-serif text-[2.65rem] leading-[1.15] text-[#F2EFE6]">
-            Every record,
+            Chaque enregistrement,
             <br />
-            reconciled&nbsp;and&nbsp;signed.
+            réconcilié&nbsp;et&nbsp;signé.
           </h1>
 
           <div className="flex items-center gap-6">
@@ -94,7 +94,7 @@ const Login: React.FC = () => {
                 <circle cx="100" cy="100" r="72" fill="none" stroke="#D9C79A" strokeOpacity="0.5" strokeWidth="1" />
                 <text fontSize="8.5" fill="#D9C79A" letterSpacing="2.5">
                   <textPath href="#sealPath" startOffset="0%">
-                    AUDIT TRAIL • VERIFIED RECORD • AUDIT TRAIL • VERIFIED RECORD •
+                    PISTE D'AUDIT • ENREGISTREMENT CERTIFIÉ • PISTE D'AUDIT • ENREGISTREMENT CERTIFIÉ •
                   </textPath>
                 </text>
                 <path
@@ -108,16 +108,16 @@ const Login: React.FC = () => {
               </svg>
             </div>
             <p className="max-w-[13rem] font-sans text-[13.5px] leading-relaxed text-[#8B93A7]">
-              One workspace to plan fieldwork, track findings and close the loop with stakeholders.
+              Un seul espace pour planifier, suivre les constats et boucler la boucle avec les parties prenantes.
             </p>
           </div>
         </div>
 
         {/* Footer line */}
         <div className="relative z-10 flex items-center gap-3 border-t border-white/10 pt-6 font-mono text-[11px] tracking-wide text-[#5A6273]">
-          <span>SESSION&nbsp;SECURED</span>
+          <span>SESSION&nbsp;SÉCURISÉE</span>
           <span className="h-1 w-1 rounded-full bg-[#5A6273]" />
-          <span>&copy; {new Date().getFullYear()} Audit Pro Management System</span>
+          <span>&copy; {new Date().getFullYear()} Audit Pro — Système de gestion</span>
         </div>
       </div>
 
@@ -132,9 +132,9 @@ const Login: React.FC = () => {
             <span className="font-mono text-[13px] tracking-[0.2em] text-[#0B1220]">AUDIT&nbsp;PRO</span>
           </div>
 
-          <h2 className="font-serif text-[1.9rem] leading-tight text-[#1B2130]">Welcome back</h2>
+          <h2 className="font-serif text-[1.9rem] leading-tight text-[#1B2130]">Bon retour</h2>
           <p className="mt-2 text-[14.5px] text-[#6B7280]">
-            Sign in to continue to your audit workspace.
+            Connectez-vous pour accéder à votre espace d&rsquo;audit.
           </p>
 
           {error && (
@@ -150,9 +150,8 @@ const Login: React.FC = () => {
               <label
                 htmlFor="email"
                 className="mb-1.5 block font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-[#6B7280]"
-              >
-                Email address
-              </label>
+              >                    Adresse email
+                  </label>
               <div className="relative">
                 <Mail className="pointer-events-none absolute left-3.5 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-[#9CA3AF]" />
                 <input
@@ -160,7 +159,7 @@ const Login: React.FC = () => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@company.com"
+                  placeholder="vous@entreprise.com"
                   autoComplete="email"
                   autoFocus
                   className="w-full rounded-lg border border-[#E3DFD2] bg-white py-3 pl-11 pr-4 text-[14.5px] text-[#1B2130] placeholder:text-[#B0B4BE] transition-colors focus:border-[#B8873D] focus:outline-none focus:ring-2 focus:ring-[#B8873D]/25"
@@ -174,15 +173,13 @@ const Login: React.FC = () => {
                 <label
                   htmlFor="password"
                   className="block font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-[#6B7280]"
-                >
-                  Password
-                </label>
+                >                    Mot de passe
+                  </label>
                 <Link
                   to="/forgot-password"
                   className="text-[12.5px] font-medium text-[#B8873D] transition-colors hover:text-[#96692A]"
-                >
-                  Forgot password?
-                </Link>
+                >                    Mot de passe oublié ?
+                  </Link>
               </div>
               <div className="relative">
                 <Lock className="pointer-events-none absolute left-3.5 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-[#9CA3AF]" />
@@ -191,14 +188,14 @@ const Login: React.FC = () => {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter your password"
+                  placeholder="Saisissez votre mot de passe"
                   autoComplete="current-password"
                   className="w-full rounded-lg border border-[#E3DFD2] bg-white py-3 pl-11 pr-11 text-[14.5px] text-[#1B2130] placeholder:text-[#B0B4BE] transition-colors focus:border-[#B8873D] focus:outline-none focus:ring-2 focus:ring-[#B8873D]/25"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  aria-label={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
                   className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#9CA3AF] transition-colors hover:text-[#6B7280]"
                 >
                   {showPassword ? <EyeOff className="h-[18px] w-[18px]" /> : <Eye className="h-[18px] w-[18px]" />}
@@ -215,26 +212,26 @@ const Login: React.FC = () => {
               {loading ? (
                 <>
                   <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                  Signing in&hellip;
+                  Connexion&hellip;
                 </>
               ) : (
                 <>
                   <LogIn className="h-[18px] w-[18px]" />
-                  Sign in
+                  Se connecter
                 </>
               )}
             </button>
           </form>
 
           <p className="mt-7 text-center text-[13.5px] text-[#6B7280]">
-            Don&rsquo;t have an account?{' '}
+            Pas encore de compte ?{' '}
             <Link to="/register" className="font-semibold text-[#B8873D] transition-colors hover:text-[#96692A]">
-              Create account
+              Créer un compte
             </Link>
           </p>
 
           <p className="mt-10 text-center font-mono text-[11px] tracking-wide text-[#B0B4BE] lg:hidden">
-            &copy; {new Date().getFullYear()} Audit Pro Management System
+            &copy; {new Date().getFullYear()} Audit Pro — Système de gestion
           </p>
         </div>
       </div>

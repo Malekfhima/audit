@@ -3,27 +3,47 @@ import { authRepository } from './auth.repository';
 import { userRepository } from '../users/user.repository';
 import { hashPassword, comparePassword } from '../../core/auth/passwordUtils';
 import { generateAccessToken, generateRefreshToken, getRefreshTokenExpiry } from '../../core/auth/tokenUtils';
-import { UnauthorizedError, ConflictError, BadRequestError } from '../../core/http/httpError';
+import { UnauthorizedError, ConflictError, BadRequestError, NotFoundError } from '../../core/http/httpError';
 import {
   LoginDto,
   RegisterDto,
   ChangePasswordDto,
   ForgotPasswordDto,
   ResetPasswordDto,
+  VerifyEmailDto,
 } from './auth.types';
+import { emailService } from '../../core/email/emailService';
 
 class AuthService {
   async register(dto: RegisterDto) {
     const existing = await userRepository.findByEmail(dto.email);
     if (existing) throw new ConflictError('Email already registered');
 
-    const hashed = await hashPassword(dto.password);
-
+    // Password is hashed by the User model's pre-save hook
     const user = await userRepository.create({
       ...dto,
-      password: hashed,
-      role: dto.role || 'AUDITOR' as any,
+      role: dto.role || 'USER' as any,
     });
+
+    // In development, skip email verification — auto-verify the user
+    // In production, send a verification email
+    if (process.env.NODE_ENV === 'production') {
+      const rawToken = crypto.randomBytes(32).toString('hex');
+      const hashedToken = crypto.createHash('sha256').update(rawToken).digest('hex');
+      const expires = new Date();
+      expires.setHours(expires.getHours() + 24);
+
+      await userRepository.setEmailVerificationToken(user.id, hashedToken, expires);
+
+      emailService.sendVerificationEmail(dto.email, rawToken).catch((err) => {
+        console.warn('⚠️ Could not send verification email:', err.message);
+      });
+    } else {
+      // Dev mode: auto-verify email
+      await userRepository.setEmailVerified(user.id);
+      // Update the local user object so the response reflects the change
+      user.isEmailVerified = true;
+    }
 
     const accessToken = generateAccessToken({ userId: user.id });
     const refreshToken = generateRefreshToken({ userId: user.id });
@@ -40,6 +60,11 @@ class AuthService {
   async login(dto: LoginDto) {
     const user = await userRepository.findByEmail(dto.email);
     if (!user) throw new UnauthorizedError('Invalid credentials');
+
+    // Check if account is active
+    if (!user.isActive) {
+      throw new UnauthorizedError('Account is deactivated. Contact an administrator.');
+    }
 
     const valid = await comparePassword(
       dto.password,
@@ -110,13 +135,52 @@ class AuthService {
 
     await userRepository.setPasswordResetToken(user.id, hashedToken, expires);
 
-    // In production, send email with reset link:
-    // `${frontendUrl}/reset-password/${rawToken}`
-    // For now, return the raw token so the frontend can use it
-    return {
+    // Send reset email (non-blocking — log failure in dev)
+    emailService.sendPasswordResetEmail(dto.email, rawToken).catch((err) => {
+      console.warn('⚠️ Could not send password reset email:', err.message);
+    });
+
+    const result: { message: string; resetToken?: string } = {
       message: 'If the email exists, a reset link has been sent.',
-      resetToken: rawToken,
     };
+
+    // In development, return the raw token as a fallback so developers
+    // can test the flow even without an email service configured
+    if (process.env.NODE_ENV === 'development') {
+      result.resetToken = rawToken;
+    }
+
+    return result;
+  }
+
+  async verifyEmail(dto: VerifyEmailDto) {
+    const hashedToken = crypto.createHash('sha256').update(dto.token).digest('hex');
+
+    const user = await userRepository.findByEmailVerificationToken(hashedToken);
+    if (!user) throw new BadRequestError('Invalid or expired verification token');
+
+    await userRepository.setEmailVerified(user.id);
+
+    return { message: 'Email verified successfully.' };
+  }
+
+  async resendVerificationEmail(dto: ForgotPasswordDto) {
+    const user = await userRepository.findByEmail(dto.email);
+    if (!user) throw new NotFoundError('User not found');
+    if (user.isEmailVerified) throw new BadRequestError('Email is already verified');
+
+    const rawToken = crypto.randomBytes(32).toString('hex');
+    const hashedToken = crypto.createHash('sha256').update(rawToken).digest('hex');
+    const expires = new Date();
+    expires.setHours(expires.getHours() + 24);
+
+    await userRepository.setEmailVerificationToken(user.id, hashedToken, expires);
+
+    emailService.sendVerificationEmail(dto.email, rawToken).catch((err) => {
+      console.warn('⚠️ Could not send verification email:', err.message);
+    });
+
+    return { message: 'Verification email sent.' };
   }
 
   async resetPassword(dto: ResetPasswordDto) {

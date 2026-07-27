@@ -39,24 +39,24 @@ const Audits: React.FC = () => {
       const response = await api.get('/audits', { params });
       setAudits(response.data.data || []);
     } catch (error) {
-      console.error('Failed to fetch audits:', error);
+      console.error('Échec de récupération des audits :', error);
     } finally {
       setLoading(false);
     }
   };
 
   const getStatusBadge = (status: string) => {
-    const map: Record<string, { class: string; icon: React.ReactNode }> = {
-      PLANNED: { class: 'badge-info', icon: <Clock className="w-3 h-3" /> },
-      IN_PROGRESS: { class: 'badge-warning', icon: <Play className="w-3 h-3" /> },
-      COMPLETED: { class: 'badge-success', icon: <CheckCircle className="w-3 h-3" /> },
-      CANCELLED: { class: 'badge-danger', icon: <XCircle className="w-3 h-3" /> },
+    const map: Record<string, { class: string; icon: React.ReactNode; label: string }> = {
+      PLANNED: { class: 'badge-info', icon: <Clock className="w-3 h-3" />, label: 'Planifié' },
+      IN_PROGRESS: { class: 'badge-warning', icon: <Play className="w-3 h-3" />, label: 'En cours' },
+      COMPLETED: { class: 'badge-success', icon: <CheckCircle className="w-3 h-3" />, label: 'Terminé' },
+      CANCELLED: { class: 'badge-danger', icon: <XCircle className="w-3 h-3" />, label: 'Annulé' },
     };
-    const item = map[status] || { class: 'badge-neutral', icon: null };
+    const item = map[status] || { class: 'badge-neutral', icon: null, label: status.replace('_', ' ').toLowerCase() };
     return (
       <span className={`${item.class} capitalize`}>
         {item.icon}
-        {status.replace('_', ' ').toLowerCase()}
+        {item.label}
       </span>
     );
   };
@@ -67,11 +67,11 @@ const Audits: React.FC = () => {
       <div className="page-header">
         <div>
           <h1 className="page-title">Audits</h1>
-          <p className="page-subtitle">Manage and monitor all audit activities</p>
+          <p className="page-subtitle">Gérer et suivre toutes les activités d&rsquo;audit</p>
         </div>
         <button onClick={() => navigate('/audits/new')} className="btn-primary">
           <Plus className="w-5 h-5" />
-          New Audit
+          Nouvel audit
         </button>
       </div>
 
@@ -81,7 +81,7 @@ const Audits: React.FC = () => {
           <div className="flex-1 relative">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" />
             <input
-              type="text" placeholder="Search audits..." value={search}
+              type="text" placeholder="Rechercher des audits..." value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="input pl-11" />
           </div>
@@ -90,23 +90,23 @@ const Audits: React.FC = () => {
               <Filter className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
               <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}
                 className="input pl-10 pr-8 min-w-[140px] appearance-none cursor-pointer">
-                <option value="">All Statuses</option>
-                <option value="PLANNED">Planned</option>
-                <option value="IN_PROGRESS">In Progress</option>
-                <option value="COMPLETED">Completed</option>
-                <option value="CANCELLED">Cancelled</option>
+                <option value="">Tous les statuts</option>
+                <option value="PLANNED">Planifié</option>
+                <option value="IN_PROGRESS">En cours</option>
+                <option value="COMPLETED">Terminé</option>
+                <option value="CANCELLED">Annulé</option>
               </select>
             </div>
             <select value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)}
               className="input min-w-[130px]">
-              <option value="">All Types</option>
-              <option value="INTERNAL">Internal</option>
-              <option value="EXTERNAL">External</option>
+              <option value="">Tous les types</option>
+              <option value="INTERNAL">Interne</option>
+              <option value="EXTERNAL">Externe</option>
               <option value="CERTIFICATION">Certification</option>
             </select>
             <button onClick={fetchAudits} className="btn-primary">
               <Filter className="w-4 h-4" />
-              Apply
+              Appliquer
             </button>
           </div>
         </div>
@@ -130,11 +130,11 @@ const Audits: React.FC = () => {
         <div className="card">
           <div className="empty-state">
             <FileText className="empty-state-icon" />
-            <h3 className="empty-state-title">No audits found</h3>
-            <p className="empty-state-text">Get started by creating your first audit plan.</p>
+            <h3 className="empty-state-title">Aucun audit trouvé</h3>
+            <p className="empty-state-text">Commencez par créer votre premier plan d&rsquo;audit.</p>
             <button onClick={() => navigate('/audits/new')} className="btn-primary">
               <Plus className="w-5 h-5" />
-              Create First Audit
+              Créer le premier audit
             </button>
           </div>
         </div>
@@ -143,14 +143,14 @@ const Audits: React.FC = () => {
           <table className="table">
             <thead>
               <tr>
-                <th>Reference</th>
-                <th>Title</th>
+                <th>Référence</th>
+                <th>Titre</th>
                 <th>Type</th>
-                <th>Status</th>
+                <th>Statut</th>
                 <th>Site</th>
-                <th>Norm</th>
-                <th>Auditor</th>
-                <th>Start Date</th>
+                <th>Norme</th>
+                <th>Auditeur</th>
+                <th>Date début</th>
                 <th>Score</th>
                 <th className="text-right">Actions</th>
               </tr>

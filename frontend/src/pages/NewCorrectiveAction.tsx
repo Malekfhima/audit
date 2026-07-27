@@ -26,7 +26,7 @@ const NewCorrectiveAction: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.nonConformityId || !form.description || !form.responsibleId || !form.dueDate) {
-      setError('Please fill in all required fields');
+      setError('Veuillez remplir tous les champs obligatoires');
       return;
     }
     setLoading(true);
@@ -37,19 +37,19 @@ const NewCorrectiveAction: React.FC = () => {
         createdById: user?.id || '',
       });
       navigate('/corrective-actions');
-    } catch (err: any) { setError(err.response?.data?.message || 'Failed to create action');
+    } catch (err: any) { setError(err.response?.data?.message || 'Échec de la création de l\'action');
     } finally { setLoading(false); }
   };
 
   return (
     <div className="animate-fade-in max-w-3xl mx-auto">
       <button onClick={() => navigate('/corrective-actions')} className="btn-ghost mb-6">
-        <ArrowLeft className="w-4 h-4" /> Back
+        <ArrowLeft className="w-4 h-4" /> Retour
       </button>
       <div className="page-header">
         <div>
-          <h1 className="page-title">New Corrective Action</h1>
-          <p className="page-subtitle">Plan an action to address a non-conformity</p>
+          <h1 className="page-title">Nouvelle action corrective</h1>
+          <p className="page-subtitle">Planifier une action pour traiter une non-conformité</p>
         </div>
       </div>
       <div className="card">
@@ -57,50 +57,50 @@ const NewCorrectiveAction: React.FC = () => {
           {error && <div className="bg-red-50 text-red-700 px-4 py-3 rounded-xl mb-6 text-sm">{error}</div>}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="label">Non-Conformity *</label>
+              <label className="label">Non-conformité *</label>
               <select className="input" value={form.nonConformityId} onChange={e => setForm(p => ({...p, nonConformityId: e.target.value}))} required>
-                <option value="">Select NC...</option>
+                <option value="">Sélectionner une NC...</option>
                 {ncs.map(nc => <option key={nc._id} value={nc._id}>{nc.ncNumber} - {nc.title || nc.description?.substring(0, 50)}</option>)}
               </select>
             </div>
             <div>
               <label className="label">Description *</label>
               <textarea className="textarea" value={form.description} onChange={e => setForm(p => ({...p, description: e.target.value}))}
-                placeholder="Describe the action plan..." rows={4} required />
+                placeholder="Décrivez le plan d'action..." rows={4} required />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="label">Action Type *</label>
+                <label className="label">Type d'action *</label>
                 <select className="input" value={form.actionType} onChange={e => setForm(p => ({...p, actionType: e.target.value}))}>
                   <option value="CORRECTIVE">Corrective</option>
-                  <option value="PREVENTIVE">Preventive</option>
-                  <option value="IMPROVEMENT">Improvement</option>
+                  <option value="PREVENTIVE">Préventive</option>
+                  <option value="IMPROVEMENT">Amélioration</option>
                 </select>
               </div>
               <div>
-                <label className="label">Responsible *</label>
+                <label className="label">Responsable *</label>
                 <select className="input" value={form.responsibleId} onChange={e => setForm(p => ({...p, responsibleId: e.target.value}))} required>
-                  <option value="">Select user...</option>
+                  <option value="">Sélectionner un utilisateur...</option>
                   {users.map(u => <option key={u._id} value={u._id}>{u.firstName} {u.lastName}</option>)}
                 </select>
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="label">Due Date *</label>
+                <label className="label">Date d'échéance *</label>
                 <input type="date" className="input" value={form.dueDate}
                   onChange={e => setForm(p => ({...p, dueDate: e.target.value}))} required />
               </div>
               <div>
-                <label className="label">Resources</label>
+                <label className="label">Ressources</label>
                 <input type="text" className="input" value={form.resources}
-                  onChange={e => setForm(p => ({...p, resources: e.target.value}))} placeholder="Required resources..." />
+                  onChange={e => setForm(p => ({...p, resources: e.target.value}))} placeholder="Ressources nécessaires..." />
               </div>
             </div>
             <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
-              <button type="button" onClick={() => navigate('/corrective-actions')} className="btn-secondary">Cancel</button>
+              <button type="button" onClick={() => navigate('/corrective-actions')} className="btn-secondary">Annuler</button>
               <button type="submit" disabled={loading} className="btn-success">
-                {loading ? <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Creating...</> : <><Save className="w-4 h-5" /> Create Action</>}
+                {loading ? <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Création...</> : <><Save className="w-4 h-5" /> Créer l'action</>}
               </button>
             </div>
           </form>

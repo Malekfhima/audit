@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '../lib/api';
-import { ArrowLeft, Play, CheckCircle, XCircle, FileText, AlertTriangle, CheckCircle as CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Play, CheckCircle, XCircle, FileText, AlertTriangle, CheckCircle as CheckCircle2, Loader2, RefreshCw } from 'lucide-react';
 
 const AuditDetail: React.FC = () => {
   const { id } = useParams();
@@ -9,6 +9,8 @@ const AuditDetail: React.FC = () => {
   const [audit, setAudit] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('summary');
+  const [scoreLoading, setScoreLoading] = useState(false);
+  const [scoreMessage, setScoreMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   useEffect(() => {
     if (id) fetchAudit();
@@ -25,25 +27,46 @@ const AuditDetail: React.FC = () => {
   const handleAction = async (action: string) => {
     try {
       await api.post(`/audits/${id}/${action}`);
-      fetchAudit();
+      await fetchAudit();
     } catch (err) { console.error(err); }
   };
 
+  const handleCalculateScore = async () => {
+    setScoreLoading(true);
+    setScoreMessage(null);
+    try {
+      const response = await api.post(`/audits/${id}/calculate-score`);
+      const newScore = response.data.data?.conformityScore;
+      await fetchAudit();
+      setScoreMessage({
+        type: 'success',
+        text: newScore !== undefined ? `Score calculé : ${newScore}%` : 'Score calculé avec succès !',
+      });
+    } catch (err: any) {
+      console.error(err);
+      setScoreMessage({ type: 'error', text: err?.response?.data?.message || 'Failed to calculate score' });
+    } finally {
+      setScoreLoading(false);
+      setTimeout(() => setScoreMessage(null), 5000);
+    }
+  };
+
   if (loading) return <div className="flex items-center justify-center min-h-[400px]"><div className="w-8 h-8 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin" /></div>;
-  if (!audit) return <div className="text-center py-12">Audit not found</div>;
+  if (!audit) return <div className="text-center py-12">Audit introuvable</div>;
 
   const getStatusBadge = (status: string) => {
     const map: Record<string, string> = {
       PLANNED: 'badge-info', IN_PROGRESS: 'badge-warning',
       COMPLETED: 'badge-success', CANCELLED: 'badge-danger',
     };
-    return <span className={map[status] || 'badge-neutral'}>{status.replace('_', ' ')}</span>;
+    const labels: Record<string, string> = { PLANNED: 'Planifié', IN_PROGRESS: 'En cours', COMPLETED: 'Terminé', CANCELLED: 'Annulé' };
+    return <span className={map[status] || 'badge-neutral'}>{labels[status] || status.replace('_', ' ')}</span>;
   };
 
   return (
     <div className="animate-fade-in">
       <button onClick={() => navigate('/audits')} className="btn-ghost mb-6">
-        <ArrowLeft className="w-4 h-4" /> Back to Audits
+        <ArrowLeft className="w-4 h-4" /> Retour aux audits
       </button>
 
       {/* Header */}
@@ -62,17 +85,17 @@ const AuditDetail: React.FC = () => {
             <div className="flex gap-2">
               {audit.status === 'PLANNED' && (
                 <button onClick={() => handleAction('start')} className="btn-success">
-                  <Play className="w-4 h-4" /> Start Audit
+                  <Play className="w-4 h-4" /> Démarrer l'audit
                 </button>
               )}
               {audit.status === 'IN_PROGRESS' && (
                 <button onClick={() => handleAction('complete')} className="btn-success">
-                  <CheckCircle className="w-4 h-4" /> Complete Audit
+                  <CheckCircle className="w-4 h-4" /> Terminer l'audit
                 </button>
               )}
               {(audit.status === 'PLANNED' || audit.status === 'IN_PROGRESS') && (
                 <button onClick={() => handleAction('cancel')} className="btn-danger">
-                  <XCircle className="w-4 h-4" /> Cancel
+                  <XCircle className="w-4 h-4" /> Annuler
                 </button>
               )}
             </div>
@@ -81,7 +104,7 @@ const AuditDetail: React.FC = () => {
           {/* Quick Info */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-6 border-t border-gray-100">
             <div>
-              <p className="text-xs text-gray-500 mb-1">Norm</p>
+              <p className="text-xs text-gray-500 mb-1">Norme</p>
               <p className="text-sm font-medium text-gray-900">{audit.normId?.name || '-'}</p>
             </div>
             <div>
@@ -89,15 +112,15 @@ const AuditDetail: React.FC = () => {
               <p className="text-sm font-medium text-gray-900">{audit.siteId?.name || '-'}</p>
             </div>
             <div>
-              <p className="text-xs text-gray-500 mb-1">Lead Auditor</p>
+              <p className="text-xs text-gray-500 mb-1">Auditeur principal</p>
               <p className="text-sm font-medium text-gray-900">
                 {audit.leadAuditorId ? `${audit.leadAuditorId.firstName} ${audit.leadAuditorId.lastName}` : '-'}
               </p>
             </div>
             <div>
-              <p className="text-xs text-gray-500 mb-1">Conformity Score</p>
+              <p className="text-xs text-gray-500 mb-1">Score de conformité</p>
               <p className={`text-sm font-bold ${audit.conformityScore >= 80 ? 'text-emerald-600' : audit.conformityScore >= 50 ? 'text-amber-600' : 'text-red-600'}`}>
-                {audit.conformityScore ? `${audit.conformityScore}%` : 'N/A'}
+                {audit.conformityScore !== undefined && audit.conformityScore !== null && !isNaN(audit.conformityScore) ? `${audit.conformityScore}%` : 'N/A'}
               </p>
             </div>
           </div>
@@ -105,11 +128,11 @@ const AuditDetail: React.FC = () => {
           {/* Dates */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
             <div>
-              <p className="text-xs text-gray-500 mb-1">Planned Start</p>
+              <p className="text-xs text-gray-500 mb-1">Début prévu</p>
               <p className="text-sm text-gray-700">{audit.plannedStartDate ? new Date(audit.plannedStartDate).toLocaleDateString() : '-'}</p>
             </div>
             <div>
-              <p className="text-xs text-gray-500 mb-1">Planned End</p>
+              <p className="text-xs text-gray-500 mb-1">Fin prévue</p>
               <p className="text-sm text-gray-700">{audit.plannedEndDate ? new Date(audit.plannedEndDate).toLocaleDateString() : '-'}</p>
             </div>
           </div>
@@ -125,7 +148,13 @@ const AuditDetail: React.FC = () => {
                 className={`px-6 py-3 text-sm font-medium transition-colors border-b-2 -mb-px ${
                   activeTab === tab ? 'text-indigo-600 border-indigo-600' : 'text-gray-500 border-transparent hover:text-gray-700'
                 }`}>
-                {tab.charAt(0).toUpperCase() + tab.slice(1).replace('-', ' ')}
+                {{
+                  summary: 'Résumé',
+                  checklist: 'Check-list',
+                  'non-conformities': 'Non-conformités',
+                  actions: 'Actions',
+                  report: 'Rapport'
+                }[tab] || tab.charAt(0).toUpperCase() + tab.slice(1).replace('-', ' ')}
               </button>
             ))}
           </div>
@@ -135,51 +164,65 @@ const AuditDetail: React.FC = () => {
             <div className="space-y-4">
               {audit.scope && (
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-900 mb-2">Scope</h3>
+                  <h3 className="text-sm font-semibold text-gray-900 mb-2">Périmètre</h3>
                   <p className="text-sm text-gray-600">{audit.scope}</p>
                 </div>
               )}
               {audit.objectives && (
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-900 mb-2">Objectives</h3>
+                  <h3 className="text-sm font-semibold text-gray-900 mb-2">Objectifs</h3>
                   <p className="text-sm text-gray-600">{audit.objectives}</p>
                 </div>
               )}
               {audit.summary && (
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-900 mb-2">Summary</h3>
+                  <h3 className="text-sm font-semibold text-gray-900 mb-2">Résumé</h3>
                   <p className="text-sm text-gray-600">{audit.summary}</p>
                 </div>
               )}
               {!audit.scope && !audit.objectives && !audit.summary && (
-                <p className="text-sm text-gray-400 text-center py-8">No summary information available yet.</p>
+                <p className="text-sm text-gray-400 text-center py-8">Aucun résumé disponible pour le moment.</p>
               )}
             </div>
           )}
           {activeTab === 'checklist' && (
             <div className="text-center py-8">
               <FileText className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-              <p className="text-sm text-gray-500">Checklist management will be available in the full implementation.</p>
+              <p className="text-sm text-gray-500">La gestion de la check-list sera disponible dans l'implémentation complète.</p>
             </div>
           )}
           {activeTab === 'non-conformities' && (
             <div className="text-center py-8">
               <AlertTriangle className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-              <p className="text-sm text-gray-500">Non-conformities for this audit will appear here.</p>
+              <p className="text-sm text-gray-500">Les non-conformités de cet audit apparaîtront ici.</p>
             </div>
           )}
           {activeTab === 'actions' && (
             <div className="text-center py-8">
               <CheckCircle2 className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-              <p className="text-sm text-gray-500">Corrective actions for this audit will appear here.</p>
+              <p className="text-sm text-gray-500">Les actions correctives de cet audit apparaîtront ici.</p>
             </div>
           )}
           {activeTab === 'report' && (
             <div className="text-center py-8">
               <FileText className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-              <p className="text-sm text-gray-500 mb-4">Generate a PDF report for this audit.</p>
-              <button onClick={() => handleAction('calculate-score')} className="btn-primary">
-                Calculate Score
+              <p className="text-sm text-gray-500 mb-4">Générer un rapport PDF pour cet audit.</p>
+              {scoreMessage && (
+                <div className={`mb-4 px-4 py-3 rounded-lg text-sm font-medium ${
+                  scoreMessage.type === 'success' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-red-50 text-red-700 border border-red-200'
+                }`}>
+                  {scoreMessage.text}
+                </div>
+              )}
+              <button
+                onClick={handleCalculateScore}
+                disabled={scoreLoading}
+                className="btn-primary min-w-[180px] justify-center">
+                {scoreLoading ? (
+                  <><Loader2 className="w-4 h-4 animate-spin" /> Calcul...</>
+                ) : (
+                  <><RefreshCw className="w-4 h-4" /> Calculer le score</>
+                )}
               </button>
             </div>
           )}

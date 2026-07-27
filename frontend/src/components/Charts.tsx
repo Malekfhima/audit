@@ -34,7 +34,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 
 // ==================== BAR CHART - Audits par statut ====================
 export const AuditsBarChart: React.FC<{ data: { name: string; value: number; color: string }[] }> = ({ data }) => {
-  if (!data?.length) return <EmptyChart text="No audit data available" />;
+  if (!data?.length) return <EmptyChart text="Aucune donnée d'audit disponible" />;
   return (
     <ResponsiveContainer width="100%" height={280}>
       <BarChart data={data} margin={{ top: 10, right: 10, left: -10, bottom: 5 }}>
@@ -54,7 +54,7 @@ export const AuditsBarChart: React.FC<{ data: { name: string; value: number; col
 export const TrendsLineChart: React.FC<{
   data: { month: string; audits: number; nc: number; actions: number }[];
 }> = ({ data }) => {
-  if (!data?.length) return <EmptyChart text="No trend data available" />;
+  if (!data?.length) return <EmptyChart text="Aucune donnée de tendance disponible" />;
   return (
     <ResponsiveContainer width="100%" height={280}>
       <LineChart data={data} margin={{ top: 10, right: 10, left: -10, bottom: 5 }}>
@@ -75,7 +75,7 @@ export const TrendsLineChart: React.FC<{
 export const ConformityAreaChart: React.FC<{
   data: { month: string; conformity: number }[];
 }> = ({ data }) => {
-  if (!data?.length) return <EmptyChart text="No conformity data available" />;
+  if (!data?.length) return <EmptyChart text="Aucune donnée de conformité disponible" />;
   return (
     <ResponsiveContainer width="100%" height={280}>
       <AreaChart data={data} margin={{ top: 10, right: 10, left: -10, bottom: 5 }}>
@@ -97,7 +97,7 @@ export const ConformityAreaChart: React.FC<{
 
 // ==================== PIE CHART - Distribution NC ====================
 export const NCPieChart: React.FC<{ data: { name: string; value: number }[] }> = ({ data }) => {
-  if (!data?.length) return <EmptyChart text="No NC data available" />;
+  if (!data?.length) return <EmptyChart text="Aucune donnée NC disponible" />;
   const total = data.reduce((sum, d) => sum + d.value, 0);
   return (
     <div className="flex flex-col items-center">

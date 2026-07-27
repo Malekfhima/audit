@@ -40,11 +40,11 @@ const Legal: React.FC = () => {
     <div className="animate-fade-in">
       <div className="page-header">
         <div>
-          <h1 className="page-title">Legal Compliance</h1>
-          <p className="page-subtitle">Track legal and regulatory requirements</p>
+          <h1 className="page-title">Conformité juridique</h1>
+          <p className="page-subtitle">Suivre les exigences légales et réglementaires</p>
         </div>
         <button onClick={() => navigate('/legal/requirements/new')} className="btn-primary">
-          <Plus className="w-5 h-5" /> Add Requirement
+          <Plus className="w-5 h-5" /> Ajouter une exigence
         </button>
       </div>
 
@@ -52,10 +52,10 @@ const Legal: React.FC = () => {
         <div className="flex gap-4">
           <div className="flex-1 relative">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <input type="text" placeholder="Search legal requirements..." value={search}
+            <input type="text" placeholder="Rechercher des exigences légales..." value={search}
               onChange={(e) => setSearch(e.target.value)} className="input pl-11" />
           </div>
-          <button onClick={fetchRequirements} className="btn-primary">Search</button>
+          <button onClick={fetchRequirements} className="btn-primary">Rechercher</button>
         </div>
       </div>
 
@@ -67,10 +67,10 @@ const Legal: React.FC = () => {
         <div className="card">
           <div className="empty-state">
             <Scale className="empty-state-icon" />
-            <h3 className="empty-state-title">No legal requirements found</h3>
-            <p className="empty-state-text">Track applicable laws and regulations for your sites.</p>
+            <h3 className="empty-state-title">Aucune exigence légale trouvée</h3>
+            <p className="empty-state-text">Suivez les lois et réglementations applicables à vos sites.</p>
             <button onClick={() => navigate('/legal/requirements/new')} className="btn-primary">
-              <Plus className="w-5 h-5" /> Add Requirement
+              <Plus className="w-5 h-5" /> Ajouter une exigence
             </button>
           </div>
         </div>
@@ -79,13 +79,13 @@ const Legal: React.FC = () => {
           <table className="table">
             <thead>
               <tr>
-                <th>Ref</th>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Jurisdiction</th>
-                <th>Authority</th>
-                <th>Effective</th>
-                <th>Review</th>
+                <th>Réf.</th>
+                <th>Titre</th>
+                <th>Catégorie</th>
+                <th>Juridiction</th>
+                <th>Autorité</th>
+                <th>Effet</th>
+                <th>Révision</th>
                 <th className="text-right">Actions</th>
               </tr>
             </thead>
@@ -99,7 +99,7 @@ const Legal: React.FC = () => {
                   <td className="text-gray-500">{req.authority}</td>
                   <td>{req.effectiveDate ? new Date(req.effectiveDate).toLocaleDateString() : '-'}</td>
                   <td>{req.reviewDate ? new Date(req.reviewDate).toLocaleDateString() : '-'}</td>
-                  <td className="text-right"><button className="btn-ghost btn-sm">View</button></td>
+                  <td className="text-right"><button className="btn-ghost btn-sm">Voir</button></td>
                 </tr>
               ))}
             </tbody>

@@ -7,6 +7,7 @@ import { Norm } from '../norms/norm.model';
 import { Site } from '../sites/site.model';
 import { Process } from '../processes/process.model';
 import { User } from '../users/user.model';
+import AuditEntryModel from '../auditEntries/auditEntry.model';
 
 class AuditService {
   async createAudit(dto: CreateAuditDto, userId: string): Promise<IAudit> {
@@ -193,7 +194,38 @@ class AuditService {
   }
 
   private async calculateScoreFromEntries(auditId: string): Promise<number> {
-    return 0;
+    const entries = await AuditEntryModel.find({
+      auditId: auditId as any,
+    }).lean();
+
+    if (!entries || entries.length === 0) {
+      return 0;
+    }
+
+    const applicableEntries = entries.filter(
+      (e) => e.conformityStatus !== 'NOT_APPLICABLE'
+    );
+
+    if (applicableEntries.length === 0) {
+      return 0;
+    }
+
+    const weightedScore = applicableEntries.reduce((sum, entry) => {
+      switch (entry.conformityStatus) {
+        case 'CONFORM':
+          return sum + 100;
+        case 'OBSERVATION':
+          return sum + 75;
+        case 'OPPORTUNITY':
+          return sum + 50;
+        case 'NON_CONFORM':
+        default:
+          return sum + 0;
+      }
+    }, 0);
+
+    const score = Math.round(weightedScore / applicableEntries.length);
+    return score;
   }
 }
 

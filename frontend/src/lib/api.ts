@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000';
+// Use relative URL — Vite dev server proxies /api to the backend
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 
 export const api = axios.create({
   baseURL: `${API_BASE_URL}/api`,
@@ -29,11 +30,15 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    // Skip refresh for login/register requests or if no refresh token stored
+    const isAuthRequest = originalRequest?.url?.includes('/auth/login') ||
+      originalRequest?.url?.includes('/auth/register');
+    const refreshToken = localStorage.getItem('refreshToken');
+
+    if (error.response?.status === 401 && !originalRequest._retry && !isAuthRequest && refreshToken) {
       originalRequest._retry = true;
 
       try {
-        const refreshToken = localStorage.getItem('refreshToken');
         const response = await axios.post(`${API_BASE_URL}/api/auth/refresh`, {
           refreshToken,
         });

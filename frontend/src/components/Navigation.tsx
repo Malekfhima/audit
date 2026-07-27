@@ -16,23 +16,23 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: "Dashboard", icon: <LayoutDashboard className="w-[18px] h-[18px]" />, path: "/dashboard" },
+  { label: "Tableau de bord", icon: <LayoutDashboard className="w-[18px] h-[18px]" />, path: "/dashboard" },
   { label: "Audits", icon: <FileText className="w-[18px] h-[18px]" />, path: "/audits" },
-  { label: "Non-Conformities", icon: <AlertTriangle className="w-[18px] h-[18px]" />, path: "/non-conformities" },
-  { label: "Corrective Actions", icon: <CheckCircle className="w-[18px] h-[18px]" />, path: "/corrective-actions" },
-  { label: "Risks", icon: <AlertTriangle className="w-[18px] h-[18px]" />, path: "/risks" },
-  { label: "Legal", icon: <LegalIcon className="w-[18px] h-[18px]" />, path: "/legal" },
-  { label: "Reports", icon: <ReportIcon className="w-[18px] h-[18px]" />, path: "/reports" },
+  { label: "Non-conformités", icon: <AlertTriangle className="w-[18px] h-[18px]" />, path: "/non-conformities" },
+  { label: "Actions correctives", icon: <CheckCircle className="w-[18px] h-[18px]" />, path: "/corrective-actions" },
+  { label: "Risques", icon: <AlertTriangle className="w-[18px] h-[18px]" />, path: "/risks" },
+  { label: "Juridique", icon: <LegalIcon className="w-[18px] h-[18px]" />, path: "/legal" },
+  { label: "Rapports", icon: <ReportIcon className="w-[18px] h-[18px]" />, path: "/reports" },
   { label: "Notifications", icon: <Bell className="w-[18px] h-[18px]" />, path: "/notifications" },
   {
     label: "Configuration", icon: <Settings className="w-[18px] h-[18px]" />, path: "#",
     roles: ["ADMIN", "MANAGER"],
     children: [
-      { label: "Norms", path: "/norms", icon: <Scale className="w-4 h-4" /> },
+      { label: "Normes", path: "/norms", icon: <Scale className="w-4 h-4" /> },
       { label: "Sites", path: "/sites", icon: <Building2 className="w-4 h-4" /> },
-      { label: "Processes", path: "/processes", icon: <Workflow className="w-4 h-4" /> },
-      { label: "Users", path: "/users", icon: <Users className="w-4 h-4" /> },
-      { label: "Roles", path: "/roles", icon: <Shield className="w-4 h-4" /> },
+      { label: "Processus", path: "/processes", icon: <Workflow className="w-4 h-4" /> },
+      { label: "Utilisateurs", path: "/users", icon: <Users className="w-4 h-4" /> },
+      { label: "Rôles", path: "/roles", icon: <Shield className="w-4 h-4" /> },
     ],
   },
 ];
@@ -89,7 +89,7 @@ const Navigation: React.FC = () => {
             </div>
             <div>
               <h1 className="font-mono text-[13px] tracking-[0.18em] text-[#F2EFE6] leading-tight">AUDIT PRO</h1>
-              <p className="text-[11px] text-[#5A6273]">Management System</p>
+              <p className="text-[11px] text-[#5A6273]">Système de gestion</p>
             </div>
           </div>
           <button onClick={() => setSidebarOpen(false)}
@@ -111,7 +111,7 @@ const Navigation: React.FC = () => {
               <p className="text-[11px] text-[#5A6273] truncate">{user?.email}</p>
             </div>
             <span className="font-mono text-[10px] tracking-wide uppercase text-[#D9C79A] border border-[#B8873D]/40 rounded px-1.5 py-0.5">
-              {user?.role}
+              {user?.role === 'ADMIN' ? 'ADMIN' : user?.role === 'MANAGER' ? 'MANAGER' : user?.role === 'AUDITOR' ? 'AUDITEUR' : user?.role}
             </span>
           </div>
         </div>
@@ -170,7 +170,7 @@ const Navigation: React.FC = () => {
         <div className="relative z-10 px-3 py-3 border-t border-white/10">
           <button onClick={logout}
             className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm text-[#8B93A7] hover:bg-white/[0.04] hover:text-[#E6A392] transition-all duration-200">
-            <LogOut className="w-[18px] h-[18px]" /><span>Logout</span>
+            <LogOut className="w-[18px] h-[18px]" /><span>Déconnexion</span>
           </button>
         </div>
       </aside>

@@ -20,19 +20,19 @@ const Register: React.FC = () => {
     setError('');
 
     if (!firstName.trim() || !lastName.trim()) {
-      setError('Please enter your full name');
+      setError('Veuillez saisir votre nom complet');
       return;
     }
     if (!email.trim()) {
-      setError('Please enter your email address');
+      setError('Veuillez saisir votre adresse email');
       return;
     }
     if (password.length < 8) {
-      setError('Password must be at least 8 characters');
+      setError('Le mot de passe doit contenir au moins 8 caractères');
       return;
     }
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError('Les mots de passe ne correspondent pas');
       return;
     }
 
@@ -41,7 +41,7 @@ const Register: React.FC = () => {
       await register(firstName, lastName, email, password);
       navigate('/dashboard');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Registration failed. Please try again.');
+      setError(err.response?.data?.message || 'Échec de l\'inscription. Veuillez réessayer.');
     } finally {
       setLoading(false);
     }
@@ -78,9 +78,9 @@ const Register: React.FC = () => {
         {/* Headline + seal */}
         <div className="relative z-10 flex flex-col gap-10">
           <h1 className="max-w-sm font-serif text-[2.65rem] leading-[1.15] text-[#F2EFE6]">
-            One workspace,
+            Un espace,
             <br />
-            every&nbsp;engagement&nbsp;on&nbsp;file.
+            chaque&nbsp;mission&nbsp;archivée.
           </h1>
 
           <div className="flex items-center gap-6">
@@ -107,7 +107,7 @@ const Register: React.FC = () => {
                 <circle cx="100" cy="100" r="72" fill="none" stroke="#D9C79A" strokeOpacity="0.5" strokeWidth="1" />
                 <text fontSize="8.5" fill="#D9C79A" letterSpacing="2.5">
                   <textPath href="#sealPathReg" startOffset="0%">
-                    NEW ACCOUNT • TEAM ACCESS • NEW ACCOUNT • TEAM ACCESS •
+                    NOUVEAU COMPTE • ACCÈS ÉQUIPE • NOUVEAU COMPTE • ACCÈS ÉQUIPE •
                   </textPath>
                 </text>
                 <path
@@ -121,16 +121,16 @@ const Register: React.FC = () => {
               </svg>
             </div>
             <p className="max-w-[13rem] font-sans text-[13.5px] leading-relaxed text-[#8B93A7]">
-              Invite your team, assign engagements and keep every finding traceable from day one.
+              Invitez votre équipe, assignez des missions et conservez chaque constat traçable dès le premier jour.
             </p>
           </div>
         </div>
 
         {/* Footer line */}
         <div className="relative z-10 flex items-center gap-3 border-t border-white/10 pt-6 font-mono text-[11px] tracking-wide text-[#5A6273]">
-          <span>ENCRYPTED&nbsp;SIGN-UP</span>
+          <span>INSCRIPTION&nbsp;CHIFFRÉE</span>
           <span className="h-1 w-1 rounded-full bg-[#5A6273]" />
-          <span>&copy; {new Date().getFullYear()} Audit Pro Management System</span>
+          <span>&copy; {new Date().getFullYear()} Audit Pro — Système de gestion</span>
         </div>
       </div>
 
@@ -145,9 +145,9 @@ const Register: React.FC = () => {
             <span className="font-mono text-[13px] tracking-[0.2em] text-[#0B1220]">AUDIT&nbsp;PRO</span>
           </div>
 
-          <h2 className="font-serif text-[1.9rem] leading-tight text-[#1B2130]">Create your account</h2>
+          <h2 className="font-serif text-[1.9rem] leading-tight text-[#1B2130]">Créez votre compte</h2>
           <p className="mt-2 text-[14.5px] text-[#6B7280]">
-            Set up access to your team&rsquo;s audit workspace.
+            Configurez l&rsquo;accès à l&rsquo;espace d&rsquo;audit de votre équipe.
           </p>
 
           {error && (
@@ -161,7 +161,7 @@ const Register: React.FC = () => {
             {/* Name */}
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label htmlFor="firstName" className={labelClass}>First name</label>
+                <label htmlFor="firstName" className={labelClass}>Prénom</label>
                 <div className="relative">
                   <User className="pointer-events-none absolute left-3.5 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-[#9CA3AF]" />
                   <input
@@ -169,7 +169,7 @@ const Register: React.FC = () => {
                     type="text"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
-                    placeholder="John"
+                    placeholder="Jean"
                     autoComplete="given-name"
                     required
                     className={inputClass}
@@ -177,7 +177,7 @@ const Register: React.FC = () => {
                 </div>
               </div>
               <div>
-                <label htmlFor="lastName" className={labelClass}>Last name</label>
+                <label htmlFor="lastName" className={labelClass}>Nom</label>
                 <div className="relative">
                   <User className="pointer-events-none absolute left-3.5 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-[#9CA3AF]" />
                   <input
@@ -185,7 +185,7 @@ const Register: React.FC = () => {
                     type="text"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
-                    placeholder="Doe"
+                    placeholder="Dupont"
                     autoComplete="family-name"
                     required
                     className={inputClass}
@@ -196,7 +196,7 @@ const Register: React.FC = () => {
 
             {/* Email */}
             <div>
-              <label htmlFor="email" className={labelClass}>Email address</label>
+              <label htmlFor="email" className={labelClass}>Adresse email</label>
               <div className="relative">
                 <Mail className="pointer-events-none absolute left-3.5 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-[#9CA3AF]" />
                 <input
@@ -204,7 +204,7 @@ const Register: React.FC = () => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@company.com"
+                  placeholder="vous@entreprise.com"
                   autoComplete="email"
                   required
                   className={inputClass}
@@ -214,7 +214,7 @@ const Register: React.FC = () => {
 
             {/* Password */}
             <div>
-              <label htmlFor="password" className={labelClass}>Password</label>
+              <label htmlFor="password" className={labelClass}>Mot de passe</label>
               <div className="relative">
                 <Lock className="pointer-events-none absolute left-3.5 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-[#9CA3AF]" />
                 <input
@@ -222,7 +222,7 @@ const Register: React.FC = () => {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Min. 8 characters"
+                  placeholder="Min. 8 caractères"
                   autoComplete="new-password"
                   required
                   className={`${inputClass} pr-11`}
@@ -230,7 +230,7 @@ const Register: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  aria-label={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
                   className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#9CA3AF] transition-colors hover:text-[#6B7280]"
                 >
                   {showPassword ? <EyeOff className="h-[18px] w-[18px]" /> : <Eye className="h-[18px] w-[18px]" />}
@@ -240,7 +240,7 @@ const Register: React.FC = () => {
 
             {/* Confirm password */}
             <div>
-              <label htmlFor="confirmPassword" className={labelClass}>Confirm password</label>
+              <label htmlFor="confirmPassword" className={labelClass}>Confirmer le mot de passe</label>
               <div className="relative">
                 <Lock className="pointer-events-none absolute left-3.5 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-[#9CA3AF]" />
                 <input
@@ -248,7 +248,7 @@ const Register: React.FC = () => {
                   type={showPassword ? 'text' : 'password'}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="Repeat password"
+                  placeholder="Répétez le mot de passe"
                   autoComplete="new-password"
                   required
                   className={inputClass}
@@ -265,21 +265,21 @@ const Register: React.FC = () => {
               {loading ? (
                 <>
                   <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                  Creating account&hellip;
+                  Création du compte&hellip;
                 </>
               ) : (
                 <>
                   <UserPlus className="h-[18px] w-[18px]" />
-                  Create account
+                  Créer un compte
                 </>
               )}
             </button>
           </form>
 
           <p className="mt-7 text-center text-[13.5px] text-[#6B7280]">
-            Already have an account?{' '}
+            Déjà un compte ?{' '}
             <Link to="/login" className="font-semibold text-[#B8873D] transition-colors hover:text-[#96692A]">
-              Sign in
+              Se connecter
             </Link>
           </p>
 

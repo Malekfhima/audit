@@ -44,6 +44,19 @@ interface SecurityConfig {
   bcryptSaltRounds: number;
 }
 
+interface FrontendConfig {
+  url: string;
+}
+
+interface EmailConfig {
+  host: string;
+  port: number;
+  secure: boolean;
+  authUser: string;
+  authPass: string;
+  fromAddress: string;
+}
+
 interface AppConfig {
   server: ServerConfig;
   database: DatabaseConfig;
@@ -52,6 +65,8 @@ interface AppConfig {
   logging: LoggingConfig;
   pagination: PaginationConfig;
   security: SecurityConfig;
+  frontend: FrontendConfig;
+  email: EmailConfig;
 }
 
 /**
@@ -107,6 +122,19 @@ const config: AppConfig = {
       process.env.BCRYPT_SALT_ROUNDS || "10",
       10
     ),
+  },
+
+  frontend: {
+    url: process.env.FRONTEND_URL || "http://localhost:5173",
+  },
+
+  email: {
+    host: process.env.EMAIL_HOST || "sandbox.smtp.mailtrap.io",
+    port: parseInt(process.env.EMAIL_PORT || "2525", 10),
+    secure: process.env.EMAIL_SECURE === "true",
+    authUser: process.env.EMAIL_AUTH_USER || "",
+    authPass: process.env.EMAIL_AUTH_PASS || "",
+    fromAddress: process.env.EMAIL_FROM || "noreply@auditpro.com",
   },
 };
 

@@ -17,7 +17,8 @@ class UserRepository {
   }
 
   async findByEmail(email: string): Promise<IUser | null> {
-    return await User.findOne({ email }).select('+password');
+    // Lowercase + trim to match the schema's lowercase:true and trim:true options
+    return await User.findOne({ email: email.toLowerCase().trim() }).select('+password');
   }
 
   async update(id: string, data: UpdateUserDto): Promise<IUser | null> {
@@ -61,6 +62,22 @@ class UserRepository {
       { new: true }
     );
     return !!result;
+  }
+
+  async setEmailVerificationToken(id: string, token: string, expires: Date): Promise<boolean> {
+    const result = await User.findByIdAndUpdate(
+      id,
+      { emailVerificationToken: token, emailVerificationExpires: expires },
+      { new: true }
+    );
+    return !!result;
+  }
+
+  async findByEmailVerificationToken(token: string): Promise<IUser | null> {
+    return await User.findOne({
+      emailVerificationToken: token,
+      emailVerificationExpires: { $gt: new Date() }
+    }).select('+password');
   }
 
   async findByResetToken(token: string): Promise<IUser | null> {

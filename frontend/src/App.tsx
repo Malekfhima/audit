@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import EmailVerification from "./pages/EmailVerification";
 import Dashboard from "./pages/Dashboard";
 import Audits from "./pages/Audits";
 import Norms from "./pages/Norms";
@@ -42,7 +43,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-12 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin" />
-          <p className="text-sm text-gray-500">Loading...</p>
+          <p className="text-sm text-gray-500">Chargement...</p>
         </div>
       </div>
     );
@@ -70,7 +71,7 @@ const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-12 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin" />
-          <p className="text-sm text-gray-500">Loading...</p>
+          <p className="text-sm text-gray-500">Chargement...</p>
         </div>
       </div>
     );
@@ -113,6 +114,14 @@ function App() {
             element={
               <PublicRoute>
                 <ResetPassword />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/verify-email/:token"
+            element={
+              <PublicRoute>
+                <EmailVerification />
               </PublicRoute>
             }
           />

@@ -44,25 +44,25 @@ const Reports: React.FC = () => {
     <div className="animate-fade-in">
       <div className="page-header">
         <div>
-          <h1 className="page-title">Reports</h1>
-          <p className="page-subtitle">Generate and download audit reports</p>
+          <h1 className="page-title">Rapports</h1>
+          <p className="page-subtitle">Générer et télécharger des rapports d&rsquo;audit</p>
         </div>
         <button onClick={() => navigate('/reports/new')} className="btn-primary">
-          <Plus className="w-5 h-5" /> Generate Report
+          <Plus className="w-5 h-5" /> Générer un rapport
         </button>
       </div>
 
       <div className="filter-bar mb-6">
         <div className="flex gap-4">
           <select value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)} className="input min-w-[200px]">
-            <option value="">All Report Types</option>
-            <option value="AUDIT_SUMMARY">Audit Summary</option>
-            <option value="NC_REPORT">NC Report</option>
-            <option value="ACTION_TRACKING">Action Tracking</option>
-            <option value="RISK_REGISTER">Risk Register</option>
-            <option value="COMPLIANCE_REPORT">Compliance Report</option>
+            <option value="">Tous les types</option>
+            <option value="AUDIT_SUMMARY">Résumé d'audit</option>
+            <option value="NC_REPORT">Rapport NC</option>
+            <option value="ACTION_TRACKING">Suivi d'actions</option>
+            <option value="RISK_REGISTER">Registre des risques</option>
+            <option value="COMPLIANCE_REPORT">Rapport de conformité</option>
           </select>
-          <button onClick={fetchReports} className="btn-primary">Filter</button>
+          <button onClick={fetchReports} className="btn-primary">Filtrer</button>
         </div>
       </div>
 
@@ -74,10 +74,10 @@ const Reports: React.FC = () => {
         <div className="card">
           <div className="empty-state">
             <FileText className="empty-state-icon" />
-            <h3 className="empty-state-title">No reports found</h3>
-            <p className="empty-state-text">Generate audit reports to download and share.</p>
+            <h3 className="empty-state-title">Aucun rapport trouvé</h3>
+            <p className="empty-state-text">Générez des rapports d'audit à télécharger et partager.</p>
             <button onClick={() => navigate('/reports/new')} className="btn-primary">
-              <Plus className="w-5 h-5" /> Generate Report
+              <Plus className="w-5 h-5" /> Générer un rapport
             </button>
           </div>
         </div>
@@ -86,12 +86,12 @@ const Reports: React.FC = () => {
           <table className="table">
             <thead>
               <tr>
-                <th>Report #</th>
-                <th>Name</th>
+                <th>Rapport #</th>
+                <th>Nom</th>
                 <th>Type</th>
                 <th>Format</th>
-                <th>Status</th>
-                <th>Generated</th>
+                <th>Statut</th>
+                <th>Généré</th>
                 <th className="text-right">Actions</th>
               </tr>
             </thead>
@@ -107,11 +107,11 @@ const Reports: React.FC = () => {
                   <td className="text-right">
                     {report.status === 'COMPLETED' ? (
                       <button className="btn-success btn-sm">
-                        <Download className="w-4 h-4" /> Download
+                        <Download className="w-4 h-4" /> Télécharger
                       </button>
                     ) : (
                       <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-400 bg-gray-50 rounded-lg border border-gray-100">
-                        <Clock className="w-3.5 h-3.5" /> {report.status === 'GENERATING' ? 'Generating...' : 'Failed'}
+                        <Clock className="w-3.5 h-3.5" /> {report.status === 'GENERATING' ? 'Génération...' : 'Échec'}
                       </span>
                     )}
                   </td>

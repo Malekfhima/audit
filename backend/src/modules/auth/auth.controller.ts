@@ -45,3 +45,13 @@ export const resetPassword = asyncHandler(async (req: Request, res: Response) =>
   const data = await authService.resetPassword(req.body);
   res.json({ success: true, data });
 });
+
+export const verifyEmail = asyncHandler(async (req: Request, res: Response) => {
+  const data = await authService.verifyEmail(req.body);
+  res.json({ success: true, data });
+});
+
+export const resendVerification = asyncHandler(async (req: Request, res: Response) => {
+  const data = await authService.resendVerificationEmail(req.body);
+  res.json({ success: true, data });
+});

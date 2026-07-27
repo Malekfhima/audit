@@ -1,0 +1,71 @@
+[
+  {
+    "_id": "65a50000000000000001",
+    "name": "Système de management de la qualité",
+    "code": "ISO9001",
+    "version": "2015",
+    "description": "Exigences pour un système de management de la qualité.",
+    "status": "ACTIVE",
+    "category": "Qualité",
+    "createdBy": "65a10000000000000001",
+    "clauses": [
+      { "number": "4.4", "title": "Système de management de la qualité et ses processus", "description": "Établir, mettre en œuvre et améliorer en continu un SMQ.", "requirements": ["Cartographie des processus", "Interactions entre processus", "Indicateurs de performance"] },
+      { "number": "7.1.5", "title": "Ressources pour la surveillance et la mesure", "description": "Assurer des résultats de mesure valides et fiables.", "requirements": ["Étalonnage des équipements", "Traçabilité métrologique"] },
+      { "number": "8.5.1", "title": "Maîtrise de la production et de la prestation de service", "description": "Production réalisée dans des conditions maîtrisées.", "requirements": ["Instructions de travail disponibles", "Équipements appropriés", "Surveillance et mesure"] },
+      { "number": "9.2", "title": "Audit interne", "description": "Réaliser des audits internes à intervalles planifiés.", "requirements": ["Programme d'audit", "Auditeurs objectifs", "Rapport à la direction"] }
+    ],
+    "createdAt": "2024-01-01T08:00:00Z",
+    "updatedAt": "2024-01-01T08:00:00Z"
+  },
+  {
+    "_id": "65a50000000000000002",
+    "name": "Système de management environnemental",
+    "code": "ISO14001",
+    "version": "2015",
+    "description": "Exigences pour un système de management environnemental.",
+    "status": "ACTIVE",
+    "category": "Environnement",
+    "createdBy": "65a10000000000000001",
+    "clauses": [
+      { "number": "6.1.2", "title": "Aspects environnementaux", "description": "Déterminer les aspects environnementaux et leurs impacts.", "requirements": ["Registre des aspects", "Critères de significativité"] },
+      { "number": "8.1", "title": "Maîtrise opérationnelle", "description": "Critères opérationnels pour maîtriser les processus.", "requirements": ["Procédures documentées", "Maîtrise des sous-traitants"] },
+      { "number": "9.1.1", "title": "Surveillance, mesure, analyse et évaluation", "description": "Surveiller les opérations à impact environnemental significatif.", "requirements": ["Suivi des consommations", "Suivi des rejets et déchets"] }
+    ],
+    "createdAt": "2024-01-01T08:00:00Z",
+    "updatedAt": "2024-01-01T08:00:00Z"
+  },
+  {
+    "_id": "65a50000000000000003",
+    "name": "Système de management de la santé et sécurité au travail",
+    "code": "ISO45001",
+    "version": "2018",
+    "description": "Exigences pour un système de management SST.",
+    "status": "ACTIVE",
+    "category": "Santé & Sécurité",
+    "createdBy": "65a10000000000000001",
+    "clauses": [
+      { "number": "6.1.2.1", "title": "Identification des dangers", "description": "Processus continu d'identification des dangers.", "requirements": ["Analyse des risques par poste", "Implication des travailleurs"] },
+      { "number": "8.1.2", "title": "Élimination des dangers et réduction des risques SST", "description": "Application de la hiérarchie des mesures de maîtrise.", "requirements": ["Élimination", "Substitution", "Mesures d'ingénierie", "EPI"] },
+      { "number": "10.2", "title": "Incidents, non-conformités et actions correctives", "description": "Traiter les incidents et non-conformités SST.", "requirements": ["Déclaration des incidents", "Enquête et analyse des causes", "Actions correctives"] }
+    ],
+    "createdAt": "2024-01-01T08:00:00Z",
+    "updatedAt": "2024-01-01T08:00:00Z"
+  },
+  {
+    "_id": "65a50000000000000004",
+    "name": "Système de management de la sécurité de l'information",
+    "code": "ISO27001",
+    "version": "2022",
+    "description": "Exigences pour un système de management de la sécurité de l'information.",
+    "status": "ACTIVE",
+    "category": "Sécurité informatique",
+    "createdBy": "65a10000000000000001",
+    "clauses": [
+      { "number": "5.1", "title": "Leadership et engagement", "description": "La direction démontre son engagement envers le SMSI.", "requirements": ["Politique SSI approuvée", "Ressources allouées"] },
+      { "number": "6.1.2", "title": "Appréciation des risques de sécurité de l'information", "description": "Processus d'appréciation des risques SSI.", "requirements": ["Méthodologie documentée", "Registre des risques SSI"] },
+      { "number": "8.1", "title": "Planification et contrôle opérationnels", "description": "Mise en œuvre des mesures de traitement des risques.", "requirements": ["Plan de traitement des risques", "Contrôles techniques et organisationnels"] }
+    ],
+    "createdAt": "2024-06-01T08:00:00Z",
+    "updatedAt": "2024-06-01T08:00:00Z"
+  }
+]

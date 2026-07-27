@@ -65,15 +65,15 @@ const Notifications: React.FC = () => {
         <div className="flex items-center gap-4">
           <div>
             <h1 className="page-title">Notifications</h1>
-            <p className="page-subtitle">Stay updated with system alerts</p>
+            <p className="page-subtitle">Restez informé des alertes système</p>
           </div>
           {unreadCount > 0 && (
-            <span className="badge-danger text-sm px-3 py-1">{unreadCount} unread</span>
+            <span className="badge-danger text-sm px-3 py-1">{unreadCount} non lu(s)</span>
           )}
         </div>
         {unreadCount > 0 && (
           <button onClick={markAllAsRead} className="btn-secondary">
-            <Check className="w-5 h-5" /> Mark All as Read
+            <Check className="w-5 h-5" /> Tout marquer comme lu
           </button>
         )}
       </div>
@@ -86,8 +86,8 @@ const Notifications: React.FC = () => {
         <div className="card">
           <div className="empty-state">
             <Bell className="empty-state-icon" />
-            <h3 className="empty-state-title">No notifications</h3>
-            <p className="empty-state-text">You're all caught up! Notifications will appear here.</p>
+            <h3 className="empty-state-title">Aucune notification</h3>
+            <p className="empty-state-text">Vous êtes à jour ! Les notifications apparaîtront ici.</p>
           </div>
         </div>
       ) : (
@@ -123,13 +123,13 @@ const Notifications: React.FC = () => {
                     {notification.status === 'UNREAD' && (
                       <button onClick={() => markAsRead(notification._id)}
                         className="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all"
-                        title="Mark as read">
+                        title="Marquer comme lu">
                         <Check className="w-4 h-4" />
                       </button>
                     )}
                     <button onClick={() => deleteNotification(notification._id)}
                       className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
-                      title="Delete">
+                      title="Supprimer">
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
