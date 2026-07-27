@@ -9,7 +9,7 @@ const NewNonConformity: React.FC = () => {
   const [audits, setAudits] = useState<any[]>([]);
   const [users, setUsers] = useState<any[]>([]);
   const [form, setForm] = useState({
-    auditId: '', description: '', rootCause: '', severity: 'MAJOR',
+    auditId: '', description: '', rootCause: '', severity: 'MAJOR', category: 'QUALITY',
     detectedById: '', assignedToId: '', targetClosureDate: '',
   });
   const [error, setError] = useState('');
@@ -72,9 +72,23 @@ const NewNonConformity: React.FC = () => {
                   <option value="CRITICAL">Critique</option>
                   <option value="MAJOR">Majeure</option>
                   <option value="MINOR">Mineure</option>
-                  <option value="LOW">Faible</option>
                 </select>
               </div>
+              <div>
+                <label className="label">Catégorie *</label>
+                <select className="input" value={form.category} onChange={e => setForm(p => ({...p, category: e.target.value}))}>
+                  <option value="DOCUMENTATION">Documentation</option>
+                  <option value="PROCESS">Processus</option>
+                  <option value="EQUIPMENT">Équipement</option>
+                  <option value="PERSONNEL">Personnel</option>
+                  <option value="ENVIRONMENT">Environnement</option>
+                  <option value="QUALITY">Qualité</option>
+                  <option value="SAFETY">Sécurité</option>
+                  <option value="OTHER">Autre</option>
+                </select>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="label">Détecté par *</label>
                 <select className="input" value={form.detectedById} onChange={e => setForm(p => ({...p, detectedById: e.target.value}))} required>

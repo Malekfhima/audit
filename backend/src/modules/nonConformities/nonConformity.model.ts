@@ -53,7 +53,6 @@ const NonConformitySchema = new Schema<INonConformity>(
   {
     ncNumber: {
       type: String,
-      required: true,
       unique: true,
       trim: true,
       uppercase: true,
