@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../lib/api';
 import { useAuth } from '../contexts/AuthContext';
-import { ArrowLeft, Save } from 'lucide-react';
+import { ArrowLeft, Save, AlertCircle } from 'lucide-react';
 
 const NewCorrectiveAction: React.FC = () => {
   const navigate = useNavigate();
@@ -31,13 +31,35 @@ const NewCorrectiveAction: React.FC = () => {
     }
     setLoading(true);
     try {
+      // Parse date safely: YYYY-MM-DD or DD/MM/YYYY
+      let dueDate: Date | undefined;
+      if (form.dueDate) {
+        if (form.dueDate.includes('/')) {
+          const [d, m, y] = form.dueDate.split('/');
+          dueDate = new Date(parseInt(y), parseInt(m) - 1, parseInt(d));
+        } else {
+          dueDate = new Date(form.dueDate);
+        }
+      }
+      if (!dueDate || isNaN(dueDate.getTime())) {
+        setError('Format de date invalide. Utilisez le format JJ/MM/AAAA.');
+        setLoading(false);
+        return;
+      }
       await api.post('/corrective-actions', {
         ...form,
-        dueDate: new Date(form.dueDate),
+        dueDate,
         createdById: user?.id || '',
       });
       navigate('/corrective-actions');
-    } catch (err: any) { setError(err.response?.data?.message || 'Échec de la création de l\'action');
+    } catch (err: any) {
+      const serverMsg = err.response?.data?.message || '';
+      const fieldErrors = err.response?.data?.errors;
+      if (fieldErrors?.length) {
+        setError(fieldErrors.map((e: any) => `${e.field}: ${e.message}`).join(' • '));
+      } else {
+        setError(serverMsg || 'Échec de la création de l\'action');
+      }
     } finally { setLoading(false); }
   };
 
@@ -54,7 +76,7 @@ const NewCorrectiveAction: React.FC = () => {
       </div>
       <div className="card">
         <div className="card-body">
-          {error && <div className="bg-red-50 text-red-700 px-4 py-3 rounded-xl mb-6 text-sm">{error}</div>}
+          {error && <div className="bg-red-50 text-red-700 px-4 py-3 rounded-xl mb-6 text-sm flex items-start gap-2"><AlertCircle className="w-4 h-4 mt-0.5 shrink-0" /><span>{error}</span></div>}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="label">Non-conformité *</label>
