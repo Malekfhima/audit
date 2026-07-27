@@ -97,9 +97,9 @@ UserSchema.methods.comparePassword = async function (
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-// Override toJSON to remove sensitive fields
+// Override toJSON to remove sensitive fields but keep virtuals (id, fullName)
 UserSchema.methods.toJSON = function () {
-  const obj = this.toObject();
+  const obj = this.toObject({ virtuals: true });
   delete obj.password;
   delete obj.emailVerificationToken;
   delete obj.passwordResetToken;

@@ -38,7 +38,6 @@ const CorrectiveActionSchema = new Schema<ICorrectiveAction>(
   {
     actionNumber: {
       type: String,
-      required: true,
       unique: true,
       trim: true,
       uppercase: true,
