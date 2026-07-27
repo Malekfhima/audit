@@ -36,7 +36,6 @@ const AuditSchema = new Schema<IAudit>(
     },
     auditNumber: {
       type: String,
-      required: true,
       unique: true,
       trim: true,
       uppercase: true,
